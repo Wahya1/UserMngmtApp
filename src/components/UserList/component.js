@@ -5,9 +5,8 @@ import {
   FETCH_USERS_REQUEST,
   FETCH_USERS_SUCCESS,
 } from "../../redux/UserReducer/action";
-
+import UserItemContainer from "../UserItems";
 class UserList extends Component {
-
   componentDidMount() {
     this.fetchUsers();
   }
@@ -19,8 +18,7 @@ class UserList extends Component {
 
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => {
-        if (!response.ok)
-          throw new Error("error when fetching data");
+        if (!response.ok) throw new Error("error when fetching data");
         return response.json();
       })
       .then((data) => {
@@ -32,16 +30,25 @@ class UserList extends Component {
   };
 
   render() {
-    
     const { loading, users, error } = this.props;
-    console.log({ loading, users, error });
-    if (loading) return <p>Chargement...</p>; 
-    if (error) return <p>Erreur : {error}</p>;
 
+    console.log({ loading, users, error });
+
+    if (loading) return <p>Chargement...</p>;
+    if (error) return <p>Erreur : {error}</p>;
+    console.log(users);
     return (
       <div>
         {users.map((user) => (
-          <UserItemContainer key={user.id} name={user.name} username={user.username} email={user.email} adress ={user.adress}/>
+
+          <UserItemContainer
+            key={user.id}
+            name={user.name}
+            username={user.username}
+            email={user.email}
+            address={user.address}
+            phone={user.phone}
+          />
         ))}
       </div>
     );

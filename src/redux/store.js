@@ -3,7 +3,7 @@ import { createStore, combineReducers } from "redux";
 import userReducer from "./UserReducer";
 
 const rootReducer = combineReducers({
-  users: userReducer,
+  user: userReducer,
 });
 
 const store = createStore(
