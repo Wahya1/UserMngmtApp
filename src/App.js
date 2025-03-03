@@ -1,8 +1,13 @@
 import "./App.css";
-import Footer from "./components/Footer";
+
+import UserListContainer from "./components/UserList/index";
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <div className="App">
+      <UserListContainer />
+    </div>
+  );
 }
 
 export default App;
