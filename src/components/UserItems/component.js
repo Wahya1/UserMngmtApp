@@ -1,78 +1,101 @@
-import { Button } from "@mui/material";
+import { TextField, Box, Grid, IconButton } from "@mui/material";
+import { Edit, Delete, Visibility } from "@mui/icons-material";
 
-const { Component } = require("react");
+import { Component } from "react";
 
 class UserItems extends Component {
-  handlDelete = () => {
-    return this.props.deleteUser(this.props.id);
-  };
-
-  handUpdate = (e) => {
-    const { name, value } = e.target;
-    const { address } = this.props;
-    if (name === "street" || name === "city") {
-      return this.props.updateUser({
-        ...this.props,
-        address: {
-          ...address,
-          [name]: value,
-        },
-      });
-    }
-    return this.props.updateUser({ ...this.props, [name]: value });
+  handleDelete = () => {
+    this.props.deleteUser(this.props.id);
   };
 
   render() {
     const { id, name, username, email, address, phone } = this.props;
-    return (
-      <>
-        <div>
-          <input type="text" name="id" value={id} onChange={this.handUpdate} />
-          <input
-            type="text"
-            name="name"
-            value={name}
-            onChange={this.handUpdate}
-          />
-          <input
-            type="text"
-            name="username"
-            value={username}
-            onChange={this.handUpdate}
-          />
-          <input
-            type="text"
-            name="city"
-            value={address.city}
-            onChange={this.handUpdate}
-          />
-          <input
-            type="text"
-            name="street"
-            value={address.street}
-            onChange={this.handUpdate}
-          />
-          <input
-            type="text"
-            name="email"
-            value={email}
-            onChange={this.handUpdate}
-          />
-          <input
-            type="text"
-            name="phone"
-            value={phone}
-            onChange={this.handUpdate}
-          />
 
-          <Button variant="text" onClick={this.handUpdate}>
-            Update
-          </Button>
-          <Button variant="text" onClick={this.handlDelete}>
-            Delete
-          </Button>
-        </div>
-      </>
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          padding: 2,
+          borderBottom: "1px solid #fff",
+        }}
+      >
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={1}>
+            <TextField
+              label="ID"
+              value={id}
+              variant="outlined"
+              fullWidth
+              disabled
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <TextField
+              label="Name"
+              value={name}
+              variant="outlined"
+              fullWidth
+              disabled
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <TextField
+              label="Username"
+              value={username}
+              variant="outlined"
+              fullWidth
+              disabled
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <TextField
+              label="City"
+              value={address.city}
+              variant="outlined"
+              fullWidth
+              disabled
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <TextField
+              label="Email"
+              value={email}
+              variant="outlined"
+              fullWidth
+              disabled
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <TextField
+              label="Phone"
+              value={phone}
+              variant="outlined"
+              fullWidth
+              disabled
+            />
+          </Grid>
+          <Grid item xs={1} sx={{ display: "flex", gap: 1 }}>
+            <IconButton color="primary" size="small" aria-label="Update">
+              <Edit />
+            </IconButton>
+
+            <IconButton
+              color="error"
+              size="small"
+              aria-label="Delete"
+              onClick={this.handleDelete}
+            >
+              <Delete />
+            </IconButton>
+
+            <IconButton color="secondary" size="small" aria-label="See">
+              <Visibility />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </Box>
     );
   }
 }

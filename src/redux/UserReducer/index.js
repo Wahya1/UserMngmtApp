@@ -1,7 +1,6 @@
 import {
   ADD_USER,
   DELETE_USER,
-  UPDATE_USER,
   FETCH_USERS_FAILURE,
   FETCH_USERS_REQUEST,
   FETCH_USERS_SUCCESS,
@@ -31,13 +30,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         users: state.users.filter((user) => payload.id !== user.id),
       };
-    case UPDATE_USER:
-      return {
-        ...state,
-        users: state.users.map((user) =>
-          payload.user.id === user.id ? payload.user : user
-        ),
-      };
+
     default:
       return state;
   }

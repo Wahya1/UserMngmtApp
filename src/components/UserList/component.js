@@ -7,7 +7,7 @@ import {
 } from "../../redux/UserReducer/action";
 import UserItemContainer from "../UserItems";
 
-import { Button } from "@mui/material";
+import { Button, Container, Grid, Typography } from "@mui/material";
 
 class UserList extends Component {
   componentDidMount() {
@@ -21,8 +21,7 @@ class UserList extends Component {
 
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => {
-        if (!response.ok) throw new Error("error when fetching data");
-        return response.json();
+        if (response.ok) return response.json();
       })
       .then((data) => {
         dispatch({ type: FETCH_USERS_SUCCESS, payload: data });
@@ -32,21 +31,44 @@ class UserList extends Component {
       });
   };
 
-  render() {
-    const { loading, users, error } = this.props;
+  handleAddUser = () => {
+    const newUser = {
+      id: Math.floor(Math.random() * 1000),
+      name: "New User",
+      username: "newuser",
+      email: "newuser@example.com",
+      address: { city: "Unknown" },
+      phone: "000-000-0000",
+    };
 
-    if (loading) return <p>Chargement...</p>;
-    if (error) return <p>Erreur : {error}</p>;
+    this.props.addUser(newUser);
+  };
+
+  render() {
+    const { loading, users, error, addUser } = this.props;
+
+    if (loading) return <Typography variant="h6">Chargement...</Typography>;
+    if (error)
+      return (
+        <Typography variant="h6" color="error">
+          Erreur : {error}
+        </Typography>
+      );
 
     return (
-      <>
-        <div>
-          <Button variant="text">Add User</Button>
-        </div>
-        <div>
+      <Container sx={{ mt: 3 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ mb: 2 }}
+          onClick={this.handleAddUser}
+        >
+          Add User
+        </Button>
+        <Grid sx={{ padding: "2px" }} />
+        <Grid container spacing={2}>
           {users.map((user) => (
             <UserItemContainer
-              key={user.id}
               id={user.id}
               name={user.name}
               username={user.username}
@@ -55,8 +77,8 @@ class UserList extends Component {
               phone={user.phone}
             />
           ))}
-        </div>
-      </>
+        </Grid>
+      </Container>
     );
   }
 }

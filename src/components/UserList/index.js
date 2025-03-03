@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 
 import UserList from "./component";
+import { addUser } from "../../redux/UserReducer/action";
 
 const mapStateToProps = ({ user: { loading, users, error } }) => ({
   loading,
@@ -8,5 +9,10 @@ const mapStateToProps = ({ user: { loading, users, error } }) => ({
   error,
 });
 
-const UserListContainer = connect(mapStateToProps)(UserList);
+const mapDispatchToProps = { addUser };
+
+const UserListContainer = connect(
+  mapStateToProps
+)(UserList);
+
 export default UserListContainer;
