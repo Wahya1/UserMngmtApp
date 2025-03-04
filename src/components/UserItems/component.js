@@ -1,7 +1,7 @@
+import { Component } from "react";
+
 import { TextField, Box, Grid, IconButton } from "@mui/material";
 import { Edit, Delete, Visibility } from "@mui/icons-material";
-
-import { Component } from "react";
 
 class UserItems extends Component {
   handleDelete = () => {
@@ -52,7 +52,7 @@ class UserItems extends Component {
           <Grid item xs={2}>
             <TextField
               label="City"
-              value={address.city}
+              value={address?.city || "Unknown"} 
               variant="outlined"
               fullWidth
               disabled

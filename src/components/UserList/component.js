@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import UserItemContainer from "../UserItems";
 
-import { Button, Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 
 class UserList extends Component {
   componentDidMount() {
@@ -10,7 +10,7 @@ class UserList extends Component {
   }
 
   render() {
-    const { loading, users, error, handleAddUser } = this.props;
+    const { loading, users, error } = this.props;
 
     if (loading) return <Typography variant="h6">Chargement...</Typography>;
     if (error)
@@ -22,18 +22,11 @@ class UserList extends Component {
 
     return (
       <Container sx={{ mt: 3 }}>
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ mb: 2 }}
-          onClick={handleAddUser}
-        >
-          Add User
-        </Button>
         <Grid sx={{ padding: "2px" }} />
         <Grid container spacing={2}>
           {users.map((user) => (
             <UserItemContainer
+              key={user.id}
               id={user.id}
               name={user.name}
               username={user.username}
