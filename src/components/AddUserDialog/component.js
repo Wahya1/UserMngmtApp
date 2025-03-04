@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   Button,
   Dialog,
@@ -9,7 +10,13 @@ import {
   Grid,
 } from "@mui/material";
 
-const AddUserDialog = ({ open, handleClose, handleChange, handleSubmit, newUser }) => {
+const AddUserDialog = ({
+  open,
+  handleClose,
+  handleChange,
+  handleSubmit,
+  newUser,
+}) => {
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Add New User</DialogTitle>
