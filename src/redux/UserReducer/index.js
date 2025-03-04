@@ -22,7 +22,6 @@ const userReducer = (state = initialState, action) => {
       return { ...state, loading: false, users: payload };
     case FETCH_USERS_FAILURE:
       return { ...state, loading: false, error: payload };
-
     case ADD_USER:
       return { ...state, users: [...state.users, payload.user] };
     case DELETE_USER:
