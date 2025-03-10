@@ -13,7 +13,7 @@ class AddUserDialog extends Component {
   render() {
     const { open, handleClose, handleChange, handleSubmit, newUser } =
       this.props;
-
+    console.log({ newUser });
     return (
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add New User</DialogTitle>
