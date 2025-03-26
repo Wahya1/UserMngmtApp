@@ -1,15 +1,16 @@
-import React, { Component } from "react";
+import React from "react";
+import { useState } from "react";
 
 import { Box, Button } from "@mui/material";
 
 import AddUserDialog from "./component";
+import { useDispatch } from "react-redux";
 import { addUser } from "../../redux/UserReducer/action";
-import { connect } from "react-redux";
 
-const mapDispatchToProps = { addUser };
+const AddUserDialogContainer = () => {
+  const dispatch = useDispatch();
 
-class AddUserDialogContainer extends Component {
-  state = {
+  const [dialogState, setDialogState] = useState({
     open: false,
     newUser: {
       name: "",
@@ -18,19 +19,20 @@ class AddUserDialogContainer extends Component {
       address: { city: "" },
       phone: "",
     },
+  });
+
+  const handleOpen = () => {
+    setDialogState((prevState) => ({ ...prevState, open: true }));
   };
 
-  handleOpen = () => {
-    this.setState({ open: true });
+  const handleClose = () => {
+    setDialogState((prevState) => ({ ...prevState, open: false }));
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
-  handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    this.setState((prevState) => ({
+    setDialogState((prevState) => ({
+      ...prevState,
       newUser: {
         ...prevState.newUser,
         ...(name === "city"
@@ -40,13 +42,16 @@ class AddUserDialogContainer extends Component {
     }));
   };
 
-  handleSubmit = () => {
-    const { newUser } = this.state;
+  const handleSubmit = () => {
+    const { newUser } = dialogState;
     const userWithId = { ...newUser, id: Math.floor(Math.random() * 1000) };
-    this.props.addUser(userWithId);
-    this.handleClose();
 
-    this.setState({
+    dispatch(addUser(userWithId));
+
+    handleClose();
+
+    setDialogState((prevState) => ({
+      ...prevState,
       newUser: {
         name: "",
         username: "",
@@ -54,27 +59,24 @@ class AddUserDialogContainer extends Component {
         address: { city: "" },
         phone: "",
       },
-    });
+    }));
   };
 
-  render() {
-    const { open, newUser } = this.state;
+  const { open, newUser } = dialogState;
+  return (
+    <Box sx={{ padding: 2 }}>
+      <Button variant="contained" color="primary" onClick={handleOpen}>
+        Add User
+      </Button>
+      <AddUserDialog
+        open={open}
+        handleClose={handleClose}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        newUser={newUser}
+      />
+    </Box>
+  );
+};
 
-    return (
-      <Box sx={{ padding: 2 }}>
-        <Button variant="contained" color="primary" onClick={this.handleOpen}>
-          Add User
-        </Button>
-        <AddUserDialog
-          open={open}
-          handleClose={this.handleClose}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-          newUser={newUser}
-        />
-      </Box>
-    );
-  }
-}
-
-export default connect(null, mapDispatchToProps)(AddUserDialogContainer);
+export default AddUserDialogContainer;

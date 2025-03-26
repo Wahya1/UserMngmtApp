@@ -1,58 +1,41 @@
-import { connect } from "react-redux";
-import React, { Component } from "react";
+import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 
 import { Box } from "@mui/material";
 
 import UserList from "./component";
 import AddUserDialogContainer from "../AddUserDialog";
-import { addUser } from "../../redux/UserReducer/action";
-import {
-  FETCH_USERS_FAILURE,
-  FETCH_USERS_REQUEST,
-  FETCH_USERS_SUCCESS,
-} from "../../redux/UserReducer/action";
-const mapStateToProps = ({ user: { loading, users, error } }) => ({
-  loading,
-  users,
-  error,
-});
 
-const mapDispatchToProps = (dispatch) => ({
-  addUser: (user) => dispatch(addUser(user)),
-  fetchUsers: () => {
-    dispatch({ type: FETCH_USERS_REQUEST });
+import {
+  fetchUsersFailure,
+  fetchUsersRequest,
+  fetchUsersSuccess,
+} from "../../redux/UserReducer/action";
+
+const UserListContainer = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUsersRequest());
 
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => {
         if (response.ok) return response.json();
-        throw new Error("Erreur lors du chargement des utilisateurs");
+        throw new Error("error when users fetching ");
       })
       .then((data) => {
-        dispatch({ type: FETCH_USERS_SUCCESS, payload: data });
+        dispatch(fetchUsersSuccess(data));
       })
       .catch((error) => {
-        dispatch({ type: FETCH_USERS_FAILURE, payload: error.message });
+        dispatch(fetchUsersFailure(error.message));
       });
-  },
-});
+  }, [dispatch]);
 
-class UserListContainer extends Component {
-  render() {
-    const { fetchUsers, loading, users, error } = this.props;
+  return (
+    <Box sx={{ padding: 2 }}>
+      <AddUserDialogContainer />
+      <UserList />
+    </Box>
+  );
+};
 
-    return (
-      <Box sx={{ padding: 2 }}>
-        <AddUserDialogContainer />
-
-        <UserList
-          fetchUsers={fetchUsers}
-          loading={loading}
-          users={users}
-          error={error}
-        />
-      </Box>
-    );
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserListContainer);
+export default UserListContainer;
