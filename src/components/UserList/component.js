@@ -15,8 +15,21 @@ const UserList = () => {
     );
 
   return (
-    <Container sx={{ mt: 3 }}>
-      <Grid sx={{ padding: "2px" }} />
+    <Container sx={{ mb: 10 }}>
+      <Typography
+        variant="h6"
+        sx={{
+          mb: 4,
+          fontSize: "1.8rem",
+          fontWeight: 600,
+          color: "black",
+          letterSpacing: "0.5px",
+          textAlign: "center",
+          textTransform: "uppercase",
+        }}
+      >
+        Users List
+      </Typography>
       <Grid container spacing={2}>
         {users.map((user) => (
           <UserItems

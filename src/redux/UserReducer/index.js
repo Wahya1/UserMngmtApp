@@ -4,6 +4,7 @@ import {
   FETCH_USERS_FAILURE,
   FETCH_USERS_REQUEST,
   FETCH_USERS_SUCCESS,
+  FILTER_USERS_SEARCH,
 } from "./action";
 
 const initialState = {
@@ -28,6 +29,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         users: state.users.filter((user) => payload.id !== user.id),
+      };
+    case FILTER_USERS_SEARCH:
+      return {
+        ...state,
+        users: payload,
       };
 
     default:

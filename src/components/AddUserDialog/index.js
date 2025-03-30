@@ -65,8 +65,8 @@ const AddUserDialogContainer = () => {
   const { open, newUser } = dialogState;
   return (
     <Box sx={{ padding: 2 }}>
-      <Button variant="contained" color="primary" onClick={handleOpen}>
-        Add User
+      <Button variant="contained" color="secondary" onClick={handleOpen}>
+        Add
       </Button>
       <AddUserDialog
         open={open}

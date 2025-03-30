@@ -1,39 +1,18 @@
-import { useDispatch } from "react-redux";
-import React, { useEffect } from "react";
+import React from "react";
 
 import { Box } from "@mui/material";
 
 import UserList from "./component";
-import AddUserDialogContainer from "../AddUserDialog";
-
-import {
-  fetchUsersFailure,
-  fetchUsersRequest,
-  fetchUsersSuccess,
-} from "../../redux/UserReducer/action";
+import useUsers from "../../hooks/useUsers";
 
 const UserListContainer = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchUsersRequest());
+  const users = useUsers();
 
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        if (response.ok) return response.json();
-        throw new Error("error when users fetching ");
-      })
-      .then((data) => {
-        dispatch(fetchUsersSuccess(data));
-      })
-      .catch((error) => {
-        dispatch(fetchUsersFailure(error.message));
-      });
-  }, [dispatch]);
+  //search logic here
 
   return (
     <Box sx={{ padding: 2 }}>
-      <AddUserDialogContainer />
-      <UserList />
+      <UserList users={users} />
     </Box>
   );
 };

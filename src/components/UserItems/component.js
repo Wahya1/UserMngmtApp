@@ -1,13 +1,26 @@
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { TextField, Box, Grid, IconButton } from "@mui/material";
 import { Edit, Delete, Visibility } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
+
 import { deleteUser } from "../../redux/UserReducer/action";
 
 const UserItems = ({ id, name, username, email, address, phone }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  
   const handleDelete = () => {
     dispatch(deleteUser(id));
+  };
+
+  const handleViewDetails = () => {
+    navigate(`/users/${id}`);
+  };
+
+  const handleUpdateUser = () => {
+    navigate(`/users/update/${id}`);
   };
 
   return (
@@ -76,7 +89,12 @@ const UserItems = ({ id, name, username, email, address, phone }) => {
           />
         </Grid>
         <Grid item xs={1} sx={{ display: "flex", gap: 1 }}>
-          <IconButton color="primary" size="small" aria-label="Update">
+          <IconButton
+            color="primary"
+            size="small"
+            aria-label="Update"
+            onClick={handleUpdateUser}
+          >
             <Edit />
           </IconButton>
 
@@ -89,7 +107,12 @@ const UserItems = ({ id, name, username, email, address, phone }) => {
             <Delete />
           </IconButton>
 
-          <IconButton color="secondary" size="small" aria-label="See">
+          <IconButton
+            color="secondary"
+            size="small"
+            aria-label="See"
+            onClick={handleViewDetails}
+          >
             <Visibility />
           </IconButton>
         </Grid>
