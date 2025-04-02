@@ -1,15 +1,12 @@
 import {
-  ADD_USER,
-  DELETE_USER,
-  FETCH_USERS_FAILURE,
-  FETCH_USERS_REQUEST,
-  FETCH_USERS_SUCCESS,
-  FILTER_USERS_SEARCH,
+  FETCH_USER_FAILURE,
+  FETCH_USER_REQUEST,
+  FETCH_USER_SUCCESS,
 } from "./action";
 
 const initialState = {
   loading: true,
-  users: [],
+  user: [],
   error: null,
 };
 
@@ -17,25 +14,12 @@ const userReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case FETCH_USERS_REQUEST:
+    case FETCH_USER_REQUEST:
       return { ...state, loading: true };
-    case FETCH_USERS_SUCCESS:
-      return { ...state, loading: false, users: payload };
-    case FETCH_USERS_FAILURE:
+    case FETCH_USER_SUCCESS:
+      return { ...state, loading: false, user: payload };
+    case FETCH_USER_FAILURE:
       return { ...state, loading: false, error: payload };
-    case ADD_USER:
-      return { ...state, users: [...state.users, payload.user] };
-    case DELETE_USER:
-      return {
-        ...state,
-        users: state.users.filter((user) => payload.id !== user.id),
-      };
-    case FILTER_USERS_SEARCH:
-      return {
-        ...state,
-        users: payload,
-      };
-
     default:
       return state;
   }

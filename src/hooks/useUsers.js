@@ -1,13 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import useDispatchedAction from "./useDispatchedAction";
-import { fetchUsersFailure } from "../redux/UserReducer/action";
+import {
+  fetchUsersFailure,
+  fetchUsersRequest,
+  fetchUsersSuccess,
+} from "../redux/UsersReducer/action";
+import { useEffect } from "react";
 
 const useUsers = () => {
-  const usersData = useSelector((store) => store.user);
+  const usersData = useSelector((store) => store.users.users);
 
-  const handleFetchUsersRequest = () => useDispatchedAction(fetchUsersRequest);
-  const handleFetchUsersSuccess = () => useDispatchedAction(fetchUsersSuccess);
-  const handleFetchUsersFailure = () => useDispatchedAction(fetchUsersFailure);
+  const handleFetchUsersRequest = useDispatchedAction(fetchUsersRequest);
+  const handleFetchUsersSuccess = useDispatchedAction(fetchUsersSuccess);
+  const handleFetchUsersFailure = useDispatchedAction(fetchUsersFailure);
 
   useEffect(() => {
     handleFetchUsersRequest();
@@ -24,9 +29,9 @@ const useUsers = () => {
       .catch((error) => {
         handleFetchUsersFailure(error.message);
       });
-  }, [dispatch]);
+  }, []);
 
-  return { usersData };
+  return usersData;
 };
 
 export default useUsers;

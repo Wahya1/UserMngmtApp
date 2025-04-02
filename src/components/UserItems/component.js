@@ -4,13 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { TextField, Box, Grid, IconButton } from "@mui/material";
 import { Edit, Delete, Visibility } from "@mui/icons-material";
 
-import { deleteUser } from "../../redux/UserReducer/action";
+import { deleteUser } from "../../redux/UsersReducer/action";
 
 const UserItems = ({ id, name, username, email, address, phone }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  
   const handleDelete = () => {
     dispatch(deleteUser(id));
   };
