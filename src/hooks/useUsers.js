@@ -1,6 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import useDispatchedAction from "./useDispatchedAction";
 import { fetchUsersFailure } from "../redux/UserReducer/action";
+import { useEffect } from "react";
 
 const useUsers = () => {
   const usersData = useSelector((store) => store.user);
@@ -17,14 +18,14 @@ const useUsers = () => {
         if (response.ok) return response.json();
         throw new Error("error when users fetching ");
       })
-      .then((data) => {
+      .then((data) => { 
         const mappedData = data.slice(0, 6);
         handleFetchUsersSuccess(mappedData);
       })
       .catch((error) => {
         handleFetchUsersFailure(error.message);
       });
-  }, [dispatch]);
+  }, []);
 
   return { usersData };
 };
