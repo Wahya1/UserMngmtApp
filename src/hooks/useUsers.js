@@ -1,14 +1,21 @@
 import { useSelector } from "react-redux";
 import useDispatchedAction from "./useDispatchedAction";
-import { fetchUsersFailure } from "../redux/UserReducer/action";
+
+import {
+  fetchUsersFailure,
+  fetchUsersRequest,
+  fetchUsersSuccess,
+} from "../redux/UsersReducer/action";
+
 import { useEffect } from "react";
 
 const useUsers = () => {
-  const usersData = useSelector((store) => store.user);
+  const usersData = useSelector((store) => store.users.users);
+  console.log("usersdata:", { usersData });
 
-  const handleFetchUsersRequest = () => useDispatchedAction(fetchUsersRequest);
-  const handleFetchUsersSuccess = () => useDispatchedAction(fetchUsersSuccess);
-  const handleFetchUsersFailure = () => useDispatchedAction(fetchUsersFailure);
+  const handleFetchUsersRequest = useDispatchedAction(fetchUsersRequest);
+  const handleFetchUsersSuccess = useDispatchedAction(fetchUsersSuccess);
+  const handleFetchUsersFailure = useDispatchedAction(fetchUsersFailure);
 
   useEffect(() => {
     handleFetchUsersRequest();
@@ -18,7 +25,8 @@ const useUsers = () => {
         if (response.ok) return response.json();
         throw new Error("error when users fetching ");
       })
-      .then((data) => { 
+      .then((data) => {
+        console.log("mapped data ::::::::::::::::::::::");
         const mappedData = data.slice(0, 6);
         handleFetchUsersSuccess(mappedData);
       })
@@ -27,7 +35,7 @@ const useUsers = () => {
       });
   }, []);
 
-  return { usersData };
+  return usersData;
 };
 
 export default useUsers;

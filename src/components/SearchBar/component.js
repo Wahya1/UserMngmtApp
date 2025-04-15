@@ -4,17 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-import { filterUsersSearch } from "../../redux/UserReducer/action";
+import { filterUsersSearch } from "../../redux/UsersReducer/action";
+import useDispatchedAction from "../../hooks/useDispatchedAction";
 
 const Search = () => {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.user.users || []);
+  const users = useSelector((state) => state.users.users || []);
   const [searchState, setSearchState] = useState("");
 
-  useEffect(() => {
-    console.log("i am searching ");
-    console.log({ users });
+  const handlfilterUsersSearch = useDispatchedAction(filterUsersSearch);
 
+  useEffect(() => {
     if (searchState.trim() !== "") {
       console.log({ searchState });
 
@@ -23,12 +23,12 @@ const Search = () => {
       );
 
       if (filteredUsers.length !== users.length) {
-        dispatch(filterUsersSearch(filteredUsers));
+        handlfilterUsersSearch(filteredUsers);
       }
     } else {
-      dispatch(filterUsersSearch(users));
+      handlfilterUsersSearch(users);
     }
-  }, [searchState, users, dispatch]);
+  }, [searchState, users, dispatch, handlfilterUsersSearch]);
 
   return (
     <TextField

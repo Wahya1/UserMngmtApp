@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 const useDispatchedAction = (action) => {
   const dispatch = useDispatch();
 
-  return (...args) => {
+  return (...agrs) => {
     dispatch(action(...agrs));
   };
 };

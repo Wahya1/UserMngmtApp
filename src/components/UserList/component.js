@@ -1,10 +1,14 @@
 import React from "react";
+
 import { Container, Grid, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
+
 import UserItems from "../UserItems/component";
+import useUsers from "../../hooks/useUsers";
+import { useSelector } from "react-redux";
 
 const UserList = () => {
-  const { loading, users, error } = useSelector((state) => state.user);
+  const users = useUsers();
+  const { loading, error } = useSelector((state) => state.users);
 
   if (loading) return <Typography variant="h6">Chargement...</Typography>;
   if (error)
@@ -31,17 +35,17 @@ const UserList = () => {
         Users List
       </Typography>
       <Grid container spacing={2}>
-        {users.map((user) => (
-          <UserItems
-            key={user.id}
-            id={user.id}
-            name={user.name}
-            username={user.username}
-            email={user.email}
-            address={user.address}
-            phone={user.phone}
-          />
-        ))}
+        {users?.map((user) => (
+            <UserItems
+              key={user.id}
+              id={user.id}
+              name={user.name}
+              username={user.username}
+              email={user.email}
+              address={user.address}
+              phone={user.phone}
+            />
+          ))}
       </Grid>
     </Container>
   );

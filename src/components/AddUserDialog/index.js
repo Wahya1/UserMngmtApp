@@ -5,7 +5,7 @@ import { Box, Button } from "@mui/material";
 
 import AddUserDialog from "./component";
 import { useDispatch } from "react-redux";
-import { addUser } from "../../redux/UserReducer/action";
+import { addUser } from "../../redux/UsersReducer/action";
 
 const AddUserDialogContainer = () => {
   const dispatch = useDispatch();
